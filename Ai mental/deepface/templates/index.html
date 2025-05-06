@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion-Based Meme Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 30px;
+        }
+        h1 {
+            color: #444;
+        }
+        img, video {
+            width: 480px;
+            max-width: 90%;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            margin-top: 20px;
+        }
+        .info {
+            font-size: 1.2em;
+            margin: 20px;
+        }
+        .button {
+            margin-top: 30px;
+        }
+        button {
+            padding: 12px 24px;
+            font-size: 1em;
+            background-color: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1976d2;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧠 Emotion-Based Content Recommender</h1>
+
+    <div class="info">
+        <p><strong>Detected Emotion:</strong> {{ emotion }}</p>
+        <p><strong>Timestamp:</strong> {{ timestamp }}</p>
+    </div>
+
+    {% if meme %}
+        <h2>{{ meme.title }}</h2>
+
+        {% if meme.image_url.endswith('.mp4') %}
+            <video controls autoplay loop muted>
+                <source src="{{ meme.image_url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% elif meme.image_url.endswith('.gif') %}
+            <img src="{{ meme.image_url }}" alt="Meme GIF">
+        {% else %}
+            <img src="{{ meme.image_url }}" alt="Meme Image">
+        {% endif %}
+    {% else %}
+        <p>No meme available.</p>
+    {% endif %}
+
+    <div class="button">
+        <form method="get" action="/">
+            <button type="submit">🔁 Refresh Meme</button>
+        </form>
+    </div>
+</body>
+</html>
